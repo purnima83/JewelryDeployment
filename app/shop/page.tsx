@@ -9,6 +9,7 @@ interface Product {
   title: string;
   price: number;
   image: string;
+  quantity: number; // ✅ Added quantity property
 }
 
 export default function Home() {
@@ -18,7 +19,14 @@ export default function Home() {
   useEffect(() => {
     fetch("https://fakestoreapi.com/products/category/jewelery")
       .then((res) => res.json())
-      .then((data) => setProducts(data));
+      .then((data) => {
+        // ✅ Ensure each product has a quantity property
+        const productsWithQuantity = data.map((product: Product) => ({
+          ...product,
+          quantity: 1,
+        }));
+        setProducts(productsWithQuantity);
+      });
   }, []);
 
   return (
@@ -54,7 +62,7 @@ export default function Home() {
               
               {/* ✅ Add to Cart Button */}
               <button
-                onClick={() => addToCart(product)}
+                onClick={() => addToCart({ ...product, quantity: 1 })} // Ensure quantity is included
                 className="mt-3 w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
               >
                 Add to Cart
