@@ -76,7 +76,7 @@ export default function CheckoutPage() {
 
       {cart.length === 0 ? (
         <p className="text-center text-gray-500">
-          Your cart is empty. <Link href="/shop" className="text-blue-500 underline">Shop Now</a>
+          Your cart is empty. <Link href="/shop" className="text-blue-500 underline">Shop Now</Link>
         </p>
       ) : (
         <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg">
