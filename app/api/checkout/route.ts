@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-import { connectToDatabase } from "@/lib/mongodb";
-import Order from "@/models/Order";
+import { connectToDatabase } from "@/lib/mongodb"; // ✅ Removed unused import "Order"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2023-10-16",
@@ -9,8 +8,11 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 
 export async function POST(req: Request) {
   try {
-    const { cart, address, email }: { cart: Array<{ title: string; image: string; price: number; quantity: number }>; address: string; email: string } = 
-      await req.json();
+    const { cart, address, email }: { 
+      cart: Array<{ title: string; image: string; price: number; quantity: number }>; 
+      address: string; 
+      email: string; 
+    } = await req.json();
 
     if (!cart || cart.length === 0 || !address || !email) {
       console.error("❌ Missing required fields");
@@ -21,7 +23,7 @@ export async function POST(req: Request) {
 
     console.log("🔵 Creating Stripe session...");
     
-    // ✅ Create Stripe session first
+    // ✅ Create Stripe session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: cart.map((item) => ({
