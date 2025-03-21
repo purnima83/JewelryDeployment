@@ -4,20 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "NEXT_PUBLIC_DISABLE_ESLINT=true next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint --max-warnings=0"
   },
-  "name": "jewelry-ecommerce",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-  "dev": "next dev --turbopack",
-  "build": "NEXT_PUBLIC_DISABLE_ESLINT=true next build",
-  "start": "next start",
-  "lint": "next lint --max-warnings=0"
-}
-
   "dependencies": {
     "mongoose": "^8.12.1",
     "next": "15.2.1",
@@ -32,8 +22,11 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
+    "eslint": "^8.50.0",
     "eslint-config-next": "15.2.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
