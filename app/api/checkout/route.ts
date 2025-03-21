@@ -9,14 +9,19 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 
 export async function POST(req: Request) {
   try {
-    const { cart, address, email }: { cart: any[]; address: string; email: string } = await req.json();
+    const { cart, address, email }: { cart: Array<{ title: string; image: string; price: number; quantity: number }>; address: string; email: string } = 
+      await req.json();
 
     if (!cart || cart.length === 0 || !address || !email) {
+      console.error("❌ Missing required fields");
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
     await connectToDatabase();
 
+    console.log("🔵 Creating Stripe session...");
+    
+    // ✅ Create Stripe session first
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: cart.map((item) => ({
@@ -33,19 +38,11 @@ export async function POST(req: Request) {
       customer_email: email,
     });
 
-    const newOrder = await Order.create({
-      userEmail: email,
-      items: cart,
-      total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
-      address,
-      status: "pending",
-      sessionId: session.id,
-      createdAt: new Date(),
-    });
+    console.log("✅ Stripe Session Created:", session.id);
 
     return NextResponse.json({ url: session.url });
   } catch (error) {
-    console.error("Checkout API Error:", error);
+    console.error("🚨 Checkout API Error:", error);
     return NextResponse.json({ error: "Something went wrong" }, { status: 500 });
   }
 }
