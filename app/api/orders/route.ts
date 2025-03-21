@@ -2,7 +2,10 @@ import { connectToDatabase } from "@/lib/mongodb";
 import Order from "@/models/Order";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"; // ✅ Ensure NextAuth is configured
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions"; // ✅ Move authOptions to a separate file
+
+//import { authOptions } from "@/app/api/auth/[...nextauth]/route"; // ✅ Ensure NextAuth is configured
 
 // ✅ POST: Save order to MongoDB
 export async function POST(req: Request) {
