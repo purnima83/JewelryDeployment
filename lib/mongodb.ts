@@ -6,9 +6,9 @@ if (!MONGODB_URI) {
   throw new Error("Please define the MONGODB_URI environment variable");
 }
 
-// ✅ Replaced `var` with `const` and properly typed `cached`
+// ✅ Specify type for cached variable
 const cached: { conn: mongoose.Connection | null; promise: Promise<mongoose.Connection> | null } = 
-  (global as any).mongoose || { conn: null, promise: null };
+  (global as unknown as { mongoose?: { conn: mongoose.Connection | null; promise: Promise<mongoose.Connection> | null } })?.mongoose || { conn: null, promise: null };
 
 export async function connectToDatabase(): Promise<mongoose.Connection> {
   if (cached.conn) return cached.conn;
