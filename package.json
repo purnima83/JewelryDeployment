@@ -8,6 +8,16 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "name": "jewelry-ecommerce",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+  "dev": "next dev --turbopack",
+  "build": "NEXT_PUBLIC_DISABLE_ESLINT=true next build",
+  "start": "next start",
+  "lint": "next lint --max-warnings=0"
+}
+
   "dependencies": {
     "mongoose": "^8.12.1",
     "next": "15.2.1",
