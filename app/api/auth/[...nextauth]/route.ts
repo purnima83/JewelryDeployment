@@ -1,9 +1,9 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+import { NextRequest, NextResponse } from "next/server";
 
-// ✅ Explicitly type `authOptions` for clarity
-const authOptions: NextAuthOptions = {
+const handler = NextAuth({
   providers: [
     GitHubProvider({
       clientId: process.env.GITHUB_CLIENT_ID ?? "",
@@ -12,15 +12,17 @@ const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID ?? "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
-      authorization: { params: { prompt: "select_account" } }, // Force account selection
+      authorization: { params: { prompt: "select_account" } },
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
-};
+});
 
-// ✅ Export `authOptions` separately for reuse (if needed)
-export { authOptions };
+// ✅ Correct Next.js API Route Export
+export async function GET(req: NextRequest) {
+  return handler(req, NextResponse);
+}
 
-// ✅ Ensure correct API route export
-const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };
+export async function POST(req: NextRequest) {
+  return handler(req, NextResponse);
+}
