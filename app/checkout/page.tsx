@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { useSession, signIn } from "next-auth/react";
 import Link from "next/link";
 
-
 export default function CheckoutPage() {
   const { cart, clearCart } = useCart();
   const { data: session } = useSession();
@@ -57,8 +56,8 @@ export default function CheckoutPage() {
       const data = await response.json();
 
       if (response.ok && data.url) {
-        clearCart(); // Clear the cart before redirecting
-        router.push(data.url); // Redirect to Stripe Checkout
+        clearCart();
+        router.push(data.url);
       } else {
         alert(data.error || "Something went wrong.");
       }
@@ -76,7 +75,10 @@ export default function CheckoutPage() {
 
       {cart.length === 0 ? (
         <p className="text-center text-gray-500">
-          Your cart is empty. <Link href="/shop" className="text-blue-500 underline">Shop Now</Link>
+          Your cart is empty.{" "}
+          <Link href="/shop" className="text-blue-500 underline">
+            Shop Now
+          </Link>
         </p>
       ) : (
         <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg">
@@ -93,7 +95,7 @@ export default function CheckoutPage() {
             type="email"
             placeholder="Email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)} // ✅ Make email editable
             className="w-full border p-2 rounded mb-2"
           />
           <input
