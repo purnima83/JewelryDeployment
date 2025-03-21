@@ -21,20 +21,31 @@ export async function POST(req: Request) {
     console.log("🔵 Creating Stripe session...");
     
     // ✅ Create Stripe session first
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      line_items: cart.map((item: { title: string; image: string; price: number; quantity: number }) => ({
-        price_data: {
-          currency: "usd",
-          product_data: { name: item.title, images: [item.image] },
-          unit_amount: Math.round(item.price * 100),
-        },
-        quantity: item.quantity,
-      })),
-      mode: "payment",
-      success_url: `${process.env.NEXT_PUBLIC_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_URL}/checkout`,
-      customer_email: email,
+    //const session = await stripe.checkout.sessions.create({
+     // payment_method_types: ["card"],
+      //line_items: cart.map((item: { title: string; image: string; price: number; quantity: number }) => ({
+       // price_data: {
+      //    currency: "usd",
+       //   product_data: { name: item.title, images: [item.image] },
+        //  unit_amount: Math.round(item.price * 100),
+       // },
+       // quantity: item.quantity,
+      //})),
+     // mode: "payment",
+     // success_url: `${process.env.NEXT_PUBLIC_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+    //  cancel_url: `${process.env.NEXT_PUBLIC_URL}/checkout`,
+     // customer_email: email,
+   // });
+   
+   const session = await stripe.checkout.sessions.create({
+     line_items: cart.map((item: { title: string; image: string; price: number; quantity: number }) => ({
+       price_data: {
+         currency: "usd",
+         product_data: { name: item.title, images: [item.image] },
+         unit_amount: Math.round(item.price * 100),
+      },
+      quantity: item.quantity,
+    })),
     });
 
     console.log("✅ Stripe Session Created:", session.id);

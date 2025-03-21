@@ -57,10 +57,18 @@ export default function SuccessPage() {
     return (
       <div className="text-center py-10">
         <h1 className="text-3xl font-bold text-red-600">No Order Found</h1>
-        <p className="text-gray-700 mt-4">It looks like you haven't placed an order.</p>
-        <a href="/" className="mt-6 inline-block bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
-          Continue Shopping
-        </a>
+        //<p className="text-gray-700 mt-4">It looks like you haven't placed an order.</p>
+        //<a href="/" className="mt-6 inline-block bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+         // Continue Shopping
+       // </a>
+	   <p className="text-gray-700 mt-4">It looks like you haven&apos;t placed an order.</p>
+       <Link href="/" className="mt-6 inline-block bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+        Continue Shopping
+       </Link>
+
+{/* This is a comment */}
+       <Image src={item.image} alt={item.title} width={100} height={100} />
+
       </div>
     );
   }

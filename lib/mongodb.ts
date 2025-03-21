@@ -8,8 +8,8 @@ if (!MONGODB_URI) {
 
 //let cached = (global as any).mongoose || { conn: null, promise: null };
 
-let cached: { conn: mongoose.Connection | null; promise: Promise<mongoose.Connection> | null } =
-  (global as any).mongoose || { conn: null, promise: null };
+//let cached: { conn: mongoose.Connection | null; promise: Promise<mongoose.Connection> | null } =   (global as any).mongoose || { conn: null, promise: null };
+  const cached: { conn: mongoose.Connection | null; promise: Promise<mongoose.Connection> | null } = (global as any).mongoose || { conn: null, promise: null };
 
 export async function connectToDatabase() {
   if (cached.conn) return cached.conn;
