@@ -1,6 +1,5 @@
-export const dynamic = "force-dynamic"; // ✅ Force Next.js to render this page dynamically
-
 "use client"; 
+export const dynamic = "force-dynamic"; // ✅ Force Next.js to render this page dynamically
 import { useEffect, useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
